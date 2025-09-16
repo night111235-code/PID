@@ -98,19 +98,23 @@ st.caption("Interactive tuner for a first-order process with dead time. Adjust K
 
 with st.sidebar:
     st.header("Controller (PID)")
-    Kc = st.slider("Kc (Proportional gain)", 0.0, 50.0, 12.0, 0.1)
-    Ki = st.slider("Ki (Integral factor, 1/sec-like)", 0.0, 20.0, 0.10, 0.01)
-    Kd = st.slider("Kd (Derivative factor, sec-like)", 0.0, 20.0, 0.0, 0.1)
+    Kc = st.slider("Kc (Proportional gain)", 0.0, 50.0, 10.6, 0.1)
+    Ki = st.slider("Ki (Integral factor, 1/sec-like)", 0.0, 20.0, 2.94, 0.01)
+    Kd = st.slider("Kd (Derivative factor, sec-like)", 0.0, 20.0, 5.50, 0.1)
 
-    st.header("Process (FOPDT)")
-    Kp = st.slider("Process gain (Kp)", 0.1, 5.0, 0.9, 0.1)
-    taup = st.slider("Time constant (τp, sec)", 10.0, 1000.0, 300.0, 5.0)
-    thetap = st.slider("Dead time (θ, sec)", 0.0, 200.0, 15.0, 1.0)
-    T0 = st.number_input("Ambient/Base temperature (°C)", value=23.0, step=0.5)
+    #st.header("Process (FOPDT)")
+    Kp = 1.2
+    #st.slider("Process gain (Kp)", 0.1, 5.0, 0.9, 0.1)
+    taup = 250.0
+    #st.slider("Time constant (τp, sec)", 10.0, 1000.0, 300.0, 5.0)
+    thetap = 20.0
+    #st.slider("Dead time (θ, sec)", 0.0, 200.0, 15.0, 1.0)
 
-    st.header("Simulation")
-    tf = st.slider("Final time (sec)", 50.0, 5000.0, 1000.0, 10.0)
-    n = st.slider("Number of points", 200, 5000, 1001, 1)
+    #st.header("Simulation")
+    tf = 1000
+    #st.slider("Final time (sec)", 50.0, 5000.0, 1000.0, 10.0)
+    n = 1001
+    #st.slider("Number of points", 200, 5000, 1001, 1)
 
     st.header("Setpoint profile")
     sp0 = st.number_input("SP0 (from t=0)", value=23.0, step=0.5)
@@ -118,8 +122,6 @@ with st.sidebar:
     step1_val = st.number_input("SP at Step 1", value=35.0, step=0.5)
     step2_t = st.number_input("Step 2 time (sec)", value=500.0, step=1.0, min_value=0.0, max_value=float(tf))
     step2_val = st.number_input("SP at Step 2", value=40.0, step=0.5)
-
-    st.caption("Tip: Set Ki≈1/τi and Kd≈τd if you think in time constants; here Ki and Kd are used directly like in your notebook.")
 
 # Build SP profile like your notebook (23 → 35 → 40)
 sp_profile = sorted(
